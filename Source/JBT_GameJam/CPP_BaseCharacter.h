@@ -12,6 +12,13 @@
 #include"EnhancedInputSubsystems.h"
 #include"Engine/LocalPlayer.h"
 
+#include "Math/UnrealMathUtility.h"
+
+#include "GameFramework/Character.h" // 角色基类
+#include "GameFramework/PlayerController.h" // 玩家控制器
+#include "Camera/CameraComponent.h" // 摄像机组件
+#include "GameFramework/SpringArmComponent.h" // 弹簧臂组件（通常用于摄像机跟随）
+#include "Kismet/GameplayStatics.h" 
 
 #include "CPP_BaseCharacter.generated.h"
 
@@ -21,16 +28,28 @@ class JBT_GAMEJAM_API ACPP_BaseCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|BasicComp")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components|BasicComp")
 	UC_CP_BaseComp* ActorComp;
 
 	//处理玩家移动和推动箱子的输入
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Input")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputMappingContext* InputMappingContext;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Input")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction* Move_Action;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Input")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction* StickBox_Action;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction* Rotation_Action;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction* RightMouse_Action;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	float RotationSpeed = 1000.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	USpringArmComponent* SpringArm;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	UCameraComponent* Camera;
+
 
 public:
 	// Sets default values for this character's properties
@@ -48,12 +67,21 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Input")
-	void Move();
+	void Move(const FInputActionValue& inputVector);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Input")
-	void OnStickBox();
+	void OnStickBox(const FInputActionValue& bIsStick);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Input")
-	void OnLeaveBox();
+	void OnLeaveBox(const FInputActionValue& bIsStick);
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void RotateView(const FInputActionValue& rotateVector);
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void RightButtonTriggered(const FInputActionValue& rotateVector);
+
+private:
+	bool bIsRotating = false;
 
 };
