@@ -32,6 +32,23 @@ void ACPP_BaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%d"), bShouldResetCamera));
+
+	if (bShouldResetCamera)
+	{
+		FRotator CurrentRot = Camera->GetRelativeRotation();
+		FRotator TargetRot = FRotator::ZeroRotator;
+		FRotator NewRot = FMath::RInterpTo(CurrentRot, TargetRot, DeltaTime, 10.0f);
+		Camera->SetRelativeRotation(NewRot);
+
+		// 检查是否完成
+		if (NewRot.Equals(TargetRot, 2.0f))
+		{
+			Camera->SetRelativeRotation(TargetRot);
+			bShouldResetCamera = false;
+		}
+	}
+
 }
 
 // Called to bind functionality to input
@@ -64,20 +81,22 @@ void ACPP_BaseCharacter::RotateView(const FInputActionValue& rotateVector)
 	}
 
 	float x = (rotateVector.Get<float>()+1.0f)/2.0f;
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f"), x));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f"), x));
 	if(x==0.5f)
 	{
 		return;
 	}
 	FRotator rot = Camera->GetRelativeTransform().Rotator();
-	rot.Yaw = FMath::Clamp(rot.Yaw + x*1300* GetWorld()->GetDeltaSeconds(), -90.0f, 90.0f);
-	Camera->SetWorldRotation(rot);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f,%f,%f"), rot.Roll,rot.Pitch,rot.Yaw));
+	rot.Yaw = FMath::Clamp(rot.Yaw + x*RotationSpeed* GetWorld()->GetDeltaSeconds(), -90.0f, 90.0f);
+	Camera->SetRelativeRotation(rot);
 }
 
 void ACPP_BaseCharacter::RightButtonTriggered(const FInputActionValue& rotateVector)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%d"), &bIsRotating));
-	bIsRotating = (!bIsRotating)?1:0;
+	bIsRotating = (!bIsRotating)?true:false;
+	bShouldResetCamera = !bIsRotating;
 }
 
 

@@ -84,4 +84,6 @@ public:
 private:
 	bool bIsRotating = false;
 
+	bool bShouldResetCamera = false;
+
 };
