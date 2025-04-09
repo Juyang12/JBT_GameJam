@@ -81,6 +81,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void RightButtonTriggered(const FInputActionValue& rotateVector);
 
+
 private:
 	bool bIsRotating = false;
 
