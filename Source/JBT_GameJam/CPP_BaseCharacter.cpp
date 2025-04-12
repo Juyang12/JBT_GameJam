@@ -36,15 +36,15 @@ void ACPP_BaseCharacter::Tick(float DeltaTime)
 
 	if (bShouldResetCamera)
 	{
-		FRotator CurrentRot = Camera->GetRelativeRotation();
+		FRotator CurrentRot = SpringArm->GetRelativeRotation();
 		FRotator TargetRot = FRotator::ZeroRotator;
 		FRotator NewRot = FMath::RInterpTo(CurrentRot, TargetRot, DeltaTime, 10.0f);
-		Camera->SetRelativeRotation(NewRot);
+		SpringArm->SetRelativeRotation(NewRot);
 
 		// 检查是否完成
 		if (NewRot.Equals(TargetRot, 2.0f))
 		{
-			Camera->SetRelativeRotation(TargetRot);
+			SpringArm->SetRelativeRotation(TargetRot);
 			bShouldResetCamera = false;
 		}
 	}
@@ -86,10 +86,10 @@ void ACPP_BaseCharacter::RotateView(const FInputActionValue& rotateVector)
 	{
 		return;
 	}
-	FRotator rot = Camera->GetRelativeTransform().Rotator();
+	FRotator rot = SpringArm->GetRelativeTransform().Rotator();
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f,%f,%f"), rot.Roll,rot.Pitch,rot.Yaw));
 	rot.Yaw = FMath::Clamp(rot.Yaw + x*RotationSpeed* GetWorld()->GetDeltaSeconds(), -90.0f, 90.0f);
-	Camera->SetRelativeRotation(rot);
+	SpringArm->SetRelativeRotation(rot);
 }
 
 void ACPP_BaseCharacter::RightButtonTriggered(const FInputActionValue& rotateVector)
