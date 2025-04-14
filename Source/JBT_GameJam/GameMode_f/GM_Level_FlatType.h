@@ -15,16 +15,16 @@ class JBT_GAMEJAM_API AGM_Level_FlatType : public AGameModeBase
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditDefaultsOnly, Category = "Classes")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classes")
 	TSubclassOf<APawn> CustomPawnClass;  // 用于指定蓝图Pawn
 
-	UPROPERTY(EditDefaultsOnly, Category = "Classes")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classes")
 	TSubclassOf<AHUD> CustomHUDClass;    // 用于指定蓝图HUD
 
-	UPROPERTY(BlueprintReadWrite, Category = "Rules")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Rules")
 	int32 checkpointCount = 0; // 关卡检查点数量
 
-	UPROPERTY(BlueprintReadWrite, Category = "Rules")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Rules")
 	TArray<bool> Array_checkpoint;
 
 	FString LevelPathString = TEXT("/Content/Maps/TestLevel.umap");//主关卡
@@ -41,6 +41,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Rules")
 	void goBackMainLevel();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Rules")
+	void Success();
+
 	UFUNCTION(BlueprintCallable, Category = "Rules")
 	void upadteCheckpointCount(int32 count, bool check)
 	{
@@ -55,7 +58,7 @@ public:
 			{
 				//退回到主界面
 				UE_LOG(LogTemp, Warning, TEXT("玩家推完了所有箱子"));
-				goBackMainLevel();
+				Success();
 			}
 		}
 		else//意味着这个箱子失去位置，检查点失效
