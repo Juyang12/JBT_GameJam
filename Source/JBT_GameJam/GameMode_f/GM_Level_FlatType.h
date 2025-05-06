@@ -47,11 +47,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Rules")
 	void upadteCheckpointCount(int32 count, bool check)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("箱子"));
 		if (check)
 		{
-			if (curCount < checkpointCount-1)
+			if (curCount < checkpointCount)
 			{
-				Array_checkpoint[count] = true; // 设置当前检查点为true
+				//Array_checkpoint[count] = true; // 设置当前检查点为true
 				curCount++;
 			}
 			else
@@ -65,7 +66,7 @@ public:
 		{
 			if (curCount > 0)
 			{
-				Array_checkpoint[count] = false; // 设置当前检查点为false
+				//Array_checkpoint[count] = false; // 设置当前检查点为false
 				curCount--;
 			}
 			else
