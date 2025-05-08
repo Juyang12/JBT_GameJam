@@ -48,11 +48,13 @@ public:
 	void upadteCheckpointCount(int32 count, bool check)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("箱子"));
+		UE_LOG(LogTemp, Warning, TEXT("%d"), checkpointCount);
 		if (check)
 		{
 			if (curCount < checkpointCount-1)
 			{
 				//Array_checkpoint[count] = true; // 设置当前检查点为true
+				UE_LOG(LogTemp, Warning, TEXT("%d"),curCount);
 				curCount++;
 			}
 			else
