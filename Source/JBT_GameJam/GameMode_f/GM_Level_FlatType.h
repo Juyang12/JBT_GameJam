@@ -50,7 +50,7 @@ public:
 		UE_LOG(LogTemp, Warning, TEXT("箱子"));
 		if (check)
 		{
-			if (curCount < checkpointCount)
+			if (curCount < checkpointCount-1)
 			{
 				//Array_checkpoint[count] = true; // 设置当前检查点为true
 				curCount++;
