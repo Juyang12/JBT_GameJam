@@ -20,6 +20,8 @@
 #include "GameFramework/SpringArmComponent.h" // 弹簧臂组件（通常用于摄像机跟随）
 #include "Kismet/GameplayStatics.h" 
 
+#include "GameFramework/CharacterMovementComponent.h"//移动组件类
+
 #include "CPP_BaseCharacter.generated.h"
 
 UCLASS()
@@ -44,6 +46,9 @@ public:
 	UInputAction* RightMouse_Action;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	float RotationSpeed = 1000.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	bool bIsRotating = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	USpringArmComponent* SpringArm;
@@ -83,7 +88,7 @@ public:
 
 
 private:
-	bool bIsRotating = false;
+	
 
 	bool bShouldResetCamera = false;
 
