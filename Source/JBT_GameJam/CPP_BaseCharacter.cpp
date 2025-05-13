@@ -88,7 +88,7 @@ void ACPP_BaseCharacter::RotateView(const FInputActionValue& rotateVector)
 	}
 	FRotator rot = SpringArm->GetRelativeTransform().Rotator();
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f,%f,%f"), rot.Roll,rot.Pitch,rot.Yaw));
-	rot.Yaw = FMath::Clamp(rot.Yaw + x*RotationSpeed* GetWorld()->GetDeltaSeconds(), -180.0f, 180.0f);
+	rot.Yaw = FMath::Clamp(rot.Yaw + x*RotationSpeed* GetWorld()->GetDeltaSeconds(), -180.0f, 270.0f);
 	SpringArm->SetRelativeRotation(rot);
 }
 
