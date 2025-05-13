@@ -34,7 +34,7 @@ void ACPP_BaseCharacter::Tick(float DeltaTime)
 
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%d"), bShouldResetCamera));
 
-	if (bShouldResetCamera)
+	if (false)
 	{
 		FRotator CurrentRot = SpringArm->GetRelativeRotation();
 		FRotator TargetRot = FRotator::ZeroRotator;
@@ -95,18 +95,20 @@ void ACPP_BaseCharacter::RotateView(const FInputActionValue& rotateVector)
 void ACPP_BaseCharacter::RightButtonTriggered(const FInputActionValue& rotateVector)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%d"), &bIsRotating));
-	bIsRotating = (!bIsRotating)?true:false;
+	//bIsRotating = (!bIsRotating)?true:false;
+	bIsRotating = 1;
+	/*
 	if (bIsRotating)
 	{
 		UCharacterMovementComponent* MovementComp = GetCharacterMovement();
-		MovementComp->bOrientRotationToMovement = false;
+		//MovementComp->bOrientRotationToMovement = false;
 	}
 	else
 	{
 		UCharacterMovementComponent* MovementComp = GetCharacterMovement();
-		MovementComp->bOrientRotationToMovement = true;
+		//MovementComp->bOrientRotationToMovement = true;
 		
-	}
+	}*/
 	bShouldResetCamera = !bIsRotating;
 }
 

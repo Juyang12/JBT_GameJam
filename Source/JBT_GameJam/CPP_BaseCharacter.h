@@ -48,7 +48,7 @@ public:
 	float RotationSpeed = 1000.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
-	bool bIsRotating = false;
+	bool bIsRotating = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	USpringArmComponent* SpringArm;
